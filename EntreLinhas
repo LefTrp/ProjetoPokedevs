@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<title>EntreLinhas</title>
+
+<style>
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  outline: none;
+}
+
+body {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 2s ease;
+  overflow: hidden;
+}
+
+.texto {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  color: #000000;
+  font-family: 'Nunito', sans-serif;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+#textoCentral { z-index: 20; position: absolute; pointer-events: none; }
+#textoSimples { z-index: 21; position: absolute; pointer-events: none; }
+#textoToque { z-index: 22; position: absolute; pointer-events: none; }
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+button {
+  background: linear-gradient(to bottom,#e0a9a9, #ffe4e4, #F4C2C2);
+  z-index: 10;
+  position: relative;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  font-size: 35px;
+  border: none;
+  transform: scale(1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  60% { transform: scale(1.5); }
+  100% { transform: scale(0); }
+}
+
+.animar { animation: pop 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
+
+.circulo {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, #e0a9a9, #F4C2C2, #ffe4e4);
+}
+
+.circulo:nth-of-type(2) {
+  z-index: 2;
+  width: 55px;
+  height: 55px;
+  background: radial-gradient(circle, #F4C2C2, #ffe4e4, #e0a9a9);
+}
+
+.circulo:nth-of-type(3) {
+  z-index: 1;
+  width: 65px;
+  height: 65px;
+  background: radial-gradient(circle, #ffe4e4, #e0a9a9, #F4C2C2);
+}
+
+@keyframes crescer {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  80%  { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe4e4 0%, #FCCECE 80%);
+  pointer-events: none;
+  z-index: 1;
+  transition: width 10s ease, height 10s ease;
+  top: var(--after-top, 50%);
+  left: var(--after-left, 50%);
+  transform: translate(-50%, -50%);
+  filter: blur(40px);
+}
+
+body.wave::after {
+  width: 200vh;
+  height: 200vh;
+}
+
+.balao {
+  position: absolute;
+  bottom: -35vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  padding: 15px 20px;
+  border-radius: 20px;
+  background-color: #ffe4e4;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: all 0.8s ease;
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  z-index: 25;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.balao:focus { outline: none; }
+
+.fade-final {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,1));
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.fade-final.ativo {
+  opacity: 1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="texto1" class="texto">Eu nasci assim...</div>
+<div id="texto2" class="texto">... e antes de você <br> meu mundo era desse jeito...</div>
+
+<div class="container">
+  <button id="coracao">🧡</button>
+  <div class="circulo"></div>
+  <div class="circulo"></div>
+  <div class="circulo"></div>
+</div>
+
+<div id="textoCentral" class="texto" style="top: 50%; font-size: 28px; transform: translateY(-50%);">
+...e assim tudo ficou claro...
+</div>
+
+<div id="textoSimples" class="texto" style="top: 50%; font-size: 28px; transform: translateY(-50%);">
+... com um simples...
+</div>
+
+<div id="textoToque" class="texto" style="top: 50%; font-size: 28px; transform: translateY(-50%);">
+... toque!
+</div>
+
+<div id="balao1" class="balao">Quando eu menos esperava,<br>
+você apareceu.<br>
+Apenas sendo você
+e comigo, <br>você mexeu.</div>
+
+<div id="balao2" class="balao">
+Sei que você valoriza o que é justo,<br>
+e minha resposta antes foi vazia,<br>
+não por falta de verdade,<br>
+mas por um sentimento<br>
+que eu ainda não sabia nomear...
+</div>
+
+<div id="balao3" class="balao">
+...acontece que enquanto estava<br>
+próximo de você, eu te admirava,<br>
+em silêncio,<br>
+como quem observa um detalhe raro<br>
+e teme estragar ao tocar
+</div>
+
+<div id="balao4" class="balao">
+foi aí que percebi...<br>
+não era encanto passageiro,<br>
+não era impulso ou vaidade,<br>
+era algo sereno,<br>
+mas profundo o suficiente<br>
+para me tirar o chão
+</div>
+
+<div id="balao5" class="balao">
+Você é completa por si só,<br>
+forte nas suas convicções,<br>
+delicada nos detalhes,<br>
+incrível sem esforço algum.<br><br>
+
+E talvez eu não tenha as <br>
+palavras mais perfeitas,<br>
+mas a intenção mais sincera:<br><br>
+
+quero estar ao seu lado,<br>
+não para te completar,<br>
+mas para somar,<br>
+com cuidado,<br>
+respeito,<br>
+e verdade.
+</div>
+
+<script>
+const textoCentral = document.getElementById("textoCentral");
+const botao = document.getElementById("coracao");
+const baloes = [
+  document.getElementById("balao1"),
+  document.getElementById("balao2"),
+  document.getElementById("balao3"),
+  document.getElementById("balao4"),
+  document.getElementById("balao5")
+];
+
+let indiceBalao = 0;
+let timeoutFundoRosa;
+
+function mostrarBalaoAtual() {
+  const balao = baloes[indiceBalao];
+  if (!balao) return;
+
+  balao.style.opacity = "1";
+  balao.style.bottom = "40vh";
+
+  // radial do balão
+  setTimeout(() => {
+    const rect = balao.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    [0,1,2].forEach(i => {
+      const c = document.createElement("div");
+      c.style.position = "fixed";
+      c.style.width = `${200 + i*60}px`;
+      c.style.height = `${200 + i*60}px`;
+      c.style.top = `${cy}px`;
+      c.style.left = `${cx}px`;
+      c.style.borderRadius = "50%";
+      c.style.pointerEvents = "none";
+      c.style.zIndex = "24";
+      c.style.transform = "translate(-50%, -50%) scale(0)";
+      c.style.animation = "crescer 2s ease-in-out forwards";
+      c.style.background =
+        i === 0
+          ? "radial-gradient(circle, #e0a9a9, #F4C2C2, #ffe4e4)"
+          : i === 1
+          ? "radial-gradient(circle, #F4C2C2, #ffe4e4, #e0a9a9)"
+          : "radial-gradient(circle, #ffe4e4, #e0a9a9, #F4C2C2)";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2000);
+    });
+  }, 5000);
+
+  balao.addEventListener("click", () => {
+    balao.style.bottom = "120vh";
+    balao.style.opacity = "0";
+    indiceBalao++;
+
+    if (indiceBalao < baloes.length) {
+      setTimeout(mostrarBalaoAtual, 800);
+    } else {
+      // Último balão: cancela fundo rosa e mostra fade final
+      clearTimeout(timeoutFundoRosa);
+      document.body.style.backgroundColor = "#000000";
+
+      // Espera 200ms para garantir renderização do fundo preto
+      setTimeout(() => {
+        const fade = document.getElementById("fadeFinal");
+        fade.classList.add("ativo");
+      }, 200);
+    }
+  }, { once: true });
+}
+
+botao.addEventListener("click", () => {
+  botao.classList.add("animar");
+
+  const rect = botao.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  document.body.style.setProperty('--after-top', `${centerY}px`);
+  document.body.style.setProperty('--after-left', `${centerX}px`);
+
+  setTimeout(() => document.body.classList.add("wave"), 200);
+
+  setTimeout(() => textoCentral.style.opacity = "1", 1000);
+  setTimeout(() => textoCentral.style.opacity = "0", 3500);
+  setTimeout(() => textoSimples.style.opacity = "1", 3600);
+  setTimeout(() => textoSimples.style.opacity = "0", 6600);
+  setTimeout(() => textoToque.style.opacity = "1", 6700);
+  setTimeout(() => textoToque.style.opacity = "0", 8800);
+
+  timeoutFundoRosa = setTimeout(() => document.body.style.backgroundColor = "#ffe4e4", 18200);
+
+  setTimeout(mostrarBalaoAtual, 13000);
+});
+
+botao.addEventListener("animationend", () => {
+  botao.style.display="none";
+});
+
+const texto1 = document.getElementById("texto1");
+const texto2 = document.getElementById("texto2");
+const container = document.querySelector(".container");
+
+setTimeout(() => texto1.style.opacity = "1", 2500);
+setTimeout(() => texto1.style.opacity = "0", 5000);
+setTimeout(() => {
+  document.body.style.backgroundColor = "#000000";
+  texto2.style.color = "#ffffff";
+}, 7000);
+setTimeout(() => texto2.style.opacity = "1", 8000);
+setTimeout(() => texto2.style.opacity = "0", 13000);
+setTimeout(() => {
+  container.style.opacity = "1";
+  document.querySelectorAll(".circulo").forEach(c => {
+    c.style.animation = "crescer 2s ease-in-out forwards";
+  });
+}, 15000);
+</script>
+
+<div id="fadeFinal" class="fade-final"></div>
+
+</body>
+</html>
